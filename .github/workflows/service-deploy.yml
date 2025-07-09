@@ -48,7 +48,7 @@ jobs:
           host: ${{ secrets.TRAIN_SERVER_IP }}
           username: ${{ secrets.TRAIN_SERVER_USER }}
           key: ${{ secrets.TRAIN_SERVER_SSH_KEY }}
-          source: "docker-compose.yml,backend/.env"
+          source: "docker-compose.yml,backend/.env, pg_password.txt"
           target: "~/narek-compose-deploy/"
 
 
