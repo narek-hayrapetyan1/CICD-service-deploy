@@ -1,0 +1,57 @@
+services:
+  frontend:
+    build:
+      context: ../task2/frontend
+      dockerfile: ../task2/frontend/Dockerfile
+    container_name: nginx
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+
+  backend:
+    build:
+      context: ../task2/backend
+      dockerfile: ../task2/backend/Dockerfile
+    container_name: fastapi
+    secrets:
+      - pg_password
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 8000:8000
+    env_file:
+      - ../task2/backend/.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: my_user
+      POSTGRES_DB: mydb
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_password
+    secrets:
+      - pg_password
+    ports:
+      - 5432:5432
+    networks:
+      - backend
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+
+volumes:
+  pg_data:
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+secrets:
+  pg_password:
+    file: pg_password.txt
