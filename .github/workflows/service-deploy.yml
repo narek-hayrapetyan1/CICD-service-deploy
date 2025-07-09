@@ -40,3 +40,31 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend:latest
+
+      - name: Copy docker-compose.yml to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.TRAIN_SERVER_IP }}
+          username: ${{ secrets.TRAIN_SERVER_USER }}
+          key: ${{ secrets.TRAIN_SERVER_SSH_KEY }}
+          source: "docker-compose.yml"
+          target: "~/narek-compose-deploy/"
+
+
+      - name: Deploy and run Services to Server via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.TRAIN_SERVER_IP }}
+          username: ${{ secrets.TRAIN_SERVER_USER }}
+          key: ${{ secrets.TRAIN_SERVER_SSH_KEY }}
+          script: |
+            cd ~/narek-shared-task
+            echo '${{ secrets.secrets.GHCR_PAT }}' | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker compose down  true
+            docker system prune -a -f  true
+            docker compose pull
+            docker compose up -d
+
+
+
+

@@ -1,8 +1,6 @@
 services:
   frontend:
-    build:
-      context: ../task2/frontend
-      dockerfile: ../task2/frontend/Dockerfile
+    image: ghcr.io/narek-hayrapetyan1/frontend:latest
     container_name: nginx
     ports:
       - 3000:3000
@@ -10,9 +8,7 @@ services:
       - frontend
 
   backend:
-    build:
-      context: ../task2/backend
-      dockerfile: ../task2/backend/Dockerfile
+    image: ghcr.io/narek-hayrapetyan1/frontend:latest
     container_name: fastapi
     secrets:
       - pg_password
@@ -22,7 +18,7 @@ services:
     ports:
       - 8000:8000
     env_file:
-      - ../task2/backend/.env
+      - backend/.env
     depends_on:
       - db
 
