@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.TRAIN_SERVER_SSH_KEY }}
           source: |
             docker-compose.yml
-            backend/.env
+            /backend/.env
           target: "~/narek-compose-deploy/"
 
 
