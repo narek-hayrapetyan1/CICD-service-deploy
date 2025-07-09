@@ -28,7 +28,7 @@ jobs:
       - name: Build and Push Backend Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: /backend
+          context: backend/
           file: Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/backend:latest
@@ -36,7 +36,7 @@ jobs:
       - name: Build and Push Backend Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: /frontend
+          context: frontend/
           file: Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/frontend:latest
