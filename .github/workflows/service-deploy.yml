@@ -22,6 +22,15 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
         continue-on-error: true
 
+      - name: Debug files
+        run: |
+          echo "Current working directory:"
+          pwd
+          echo "List of files:"
+          ls -lah
+          echo "Recursive list:"
+          find .
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
