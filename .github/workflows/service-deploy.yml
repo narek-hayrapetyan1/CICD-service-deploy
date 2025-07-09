@@ -22,14 +22,10 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
         continue-on-error: true
 
-      - name: Debug files
+      - name: Show first and last line of SSH key (sanitized)
         run: |
-          echo "Current working directory:"
-          pwd
-          echo "List of files:"
-          ls -lah
-          echo "Recursive list:"
-          find .
+          echo "${{ secrets.TRAIN_SERVER_SSH_KEY }}" | head -n 1
+          echo "${{ secrets.TRAIN_SERVER_SSH_KEY }}" | tail -n 1
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
