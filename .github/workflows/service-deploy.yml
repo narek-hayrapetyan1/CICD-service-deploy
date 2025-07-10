@@ -20,7 +20,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
-        continue-on-error: true
 
 
       - name: Set up Docker Buildx
